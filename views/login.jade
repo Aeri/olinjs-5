@@ -1,0 +1,15 @@
+extends layout
+block scripts
+  style(type='text/css')
+    #loginlink {
+      text-decoration: none;
+      color: black;
+    }
+block content
+  body
+    h1= title
+    p Welcome to #{title}.
+    p
+      button(type='button')
+        a(href='/login', id='loginlink')
+          | Please Log In

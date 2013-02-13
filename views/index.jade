@@ -1,5 +1,37 @@
 extends layout
-
+block scripts
+  style(type='text/css')
+    #logoutlink {
+      text-decoration: none;
+      color: black;
+    }
+    textarea {
+      resize: none;
+    }
+  script(type='text/javascript')
+    $(document).ready(function() {
+      $('#Submit').click(function (){
+        console.log("Has been clicked");
+        var color = $("#colorBox").val();
+        console.log("Color is: " + color);
+        $.post('/change', {color: color}, function(){
+          $("body").css({"background-color": "#"+color});
+        });
+      });
+    })
 block content
-  h1= title
-  p Welcome to #{title}
+  body(style="background-color: ##{color}")
+    h1= title 
+    div
+      img(src='http://graph.facebook.com/#{userID}/picture')
+    p Welcome to #{title}, #{name}. Your selected color is #{color}.
+    p
+      button(type='button')
+        a(href='/logout', id='logoutlink')
+          | Log Out
+    div(id='pickerBox')
+      h3 Pick a background color (hexadecimal):
+      textarea(rows="1", cols="5", id="colorBox", maxlength="6")
+      input(type="button", id="Submit", value="Change color")
+        | Change color
+// Thanks www.webcodingtech.com
