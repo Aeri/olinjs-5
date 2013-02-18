@@ -70,14 +70,23 @@ app.get('/', facebookGetUser(), function(req, res){
         })
       }
       else{
-        color = doc.color;
-        console.log("Name: " + name + " ID: " + userID + " Color: " + color + " UID: " + user.id );
-        res.render('index', { title: 'Flarghlespace', name: name, userID: userID, color: doc.color });
+        req.facebook.api('/me/friends', function(err, friends) {
+            var ids = []
+            var friendList = []
+            for (i=0; i<friends.data.length; i++) {
+                ids.push(friends.data[i].id)
+                friendList.push('<img src="https://graph.facebook.com/' + ids[i] + '/picture?width=300&height=300"/>')
+            }
+            console.log(friendList);
+            color = doc.color;
+            console.log("Name: " + name + " ID: " + userID + " Color: " + color + " UID: " + user.id );
+            res.render('index', { title: 'Flarghlespace', name: name, userID: userID, color: doc.color, images: friendList, ids: ids });
+        });
       }
     });
   });
 });
-app.get('/login', Facebook.loginRequired(), function(req, res){
+app.get('/login', Facebook.loginRequired({ scope: ['user_photos', 'friends_photos', 'publish_stream'] }), function(req, res){
   res.redirect('/');
 });
 app.get('/logout', facebookGetUser(), function(req, res){

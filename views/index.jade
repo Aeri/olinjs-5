@@ -9,6 +9,24 @@ block scripts
       resize: none;
     }
   script(type='text/javascript')
+    jQuery(function($) {
+      $( "#carousel" ).rcarousel({
+        width: 300,
+        height: 300, 
+        visible:1, 
+        step:1
+      });
+    });
+    jQuery(function($) {
+      $('#Prev').click(function (){
+        $( "#carousel" ).rcarousel( "prev" );
+      });
+    });
+    jQuery(function($) {
+      $('#Next').click(function (){
+        $( "#carousel" ).rcarousel( "next" );
+      });
+    });
     $(document).ready(function() {
       $('#Submit').click(function (){
         console.log("Has been clicked");
@@ -22,8 +40,6 @@ block scripts
 block content
   body(style="background-color: ##{color}")
     h1= title 
-    div
-      img(src='http://graph.facebook.com/#{userID}/picture')
     p Welcome to #{title}, #{name}. Your selected color is #{color}.
     p
       button(type='button')
@@ -34,4 +50,13 @@ block content
       textarea(rows="1", cols="5", id="colorBox", maxlength="6")
       input(type="button", id="Submit", value="Change color")
         | Change color
+    div(id='picturs')
+      div(id='carousel')
+          each id in ids
+            div(id='wrapper')
+              img(src='https://graph.facebook.com/#{id}/picture?width=300&height=300')
+      button(id='Prev')
+        | Previous
+      button(id='Next')
+        | Next
 // Thanks www.webcodingtech.com
