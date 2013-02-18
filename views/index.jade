@@ -11,8 +11,8 @@ block scripts
   script(type='text/javascript')
     jQuery(function($) {
       $( "#carousel" ).rcarousel({
-        width: 300,
-        height: 300, 
+        width: 500,
+        height: 370, 
         visible:1, 
         step:1
       });
@@ -36,7 +36,7 @@ block scripts
           $("body").css({"background-color": "#"+color});
         });
       });
-    })
+      });
 block content
   body(style="background-color: ##{color}")
     h1= title 
@@ -55,8 +55,12 @@ block content
           each id in ids
             div(id='wrapper')
               img(src='https://graph.facebook.com/#{id}/picture?width=300&height=300')
-      button(id='Prev')
-        | Previous
-      button(id='Next')
-        | Next
+              p
+                textarea(rows="1", cols="20", id="Comment")
+                input(type="button", id="commentSubmit", value="Comment")
+      p
+        button(id='Prev')
+          | Previous
+        button(id='Next')
+          | Next
 // Thanks www.webcodingtech.com
